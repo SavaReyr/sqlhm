@@ -1,0 +1,179 @@
+CREATE TABLE IF NOT EXISTS performer(
+	id SERIAL PRIMARY KEY,
+	name varchar(80) unique
+);
+
+INSERT INTO
+  performer (id, name)
+VALUES 
+  (1, 'John Denver'), 
+  (2, 'David Rawlings'), 
+  (3, 'Bee Gees'), 
+  (4, 'Queen'), 
+  (5, 'Creedence Clearwater Revival'), 
+  (6, 'Jefferson Airplane'), 
+  (7, 'Francis Sinatra'), 
+  (8, 'Sting');
+
+ CREATE TABLE IF NOT EXISTS Album(
+	id SERIAL PRIMARY KEY,
+	album_name varchar(80) unique,
+	release_year INTEGER NOT NULL
+);
+
+INSERT INTO
+  Album (id, album_name, release_year)
+VALUES 
+  (1, 'Take Me Home Country Roads', 2010), 
+  (2, 'All of My Memories', 2020), 
+  (3, 'Poor Davids Almanack', 2018), 
+  (4, 'All The Good Times', 2012), 
+  (5, 'The Ultimate Bee Gees', 1974), 
+  (6, 'Saturday Night Fever', 2001),  
+  (7, 'Greatest Hits', 2017), 
+  (8, 'News of the World', 2019),
+  (9, 'Volunteers', 2007),
+  (10, 'Surrealistic Pillow', 2009),
+  (11, 'My Way', 1981),
+  (12, 'Shape of My Heart', 1991),
+  (13, 'Willy and the Poor Boys', 1999),
+  (14, 'Pendulum', 1991);
+
+CREATE TABLE IF NOT EXISTS genre(
+	id SERIAL PRIMARY KEY,
+	genre_name varchar(80) unique 
+);
+
+INSERT INTO
+  genre (id, genre_name)
+VALUES 
+  (1, 'Country'), 
+  (2, 'Disco'), 
+  (3, 'Rock'), 
+  (4, 'Jazz'), 
+  (5, 'Traditional pop music');
+ 
+CREATE TABLE IF NOT EXISTS track(
+	id SERIAL PRIMARY KEY,
+	track_name varchar(80) unique,
+	duration float,
+	album_id integer references Album(id) 
+);
+
+INSERT INTO
+  track(id, track_name, duration, album_id)
+VALUES 
+  (1, 'Take Me Home Country Roads', 3.10, 1),
+  (2, 'Homegrown Tomatoes', 4.47, 1),
+  (3, 'All of My Memories', 3.05, 2),
+  (4, 'Around and Around', 2.55, 2),
+  (5, 'Cumberland Gap', 2.58, 3),
+  (6, 'Guitar Man', 2.15, 3),
+  (7, 'Oh Babe It Aint No Lie', 3.47, 4),
+  (8, 'Hello In There', 2.46, 4),
+  (9, 'Stayin Alive', 4.09, 5),
+  (10, 'How Deep Is Your Love', 3.59, 5),
+  (11, 'You Should Be Dancing', 2.56, 6),
+  (12, 'Night Fever', 4.20, 7),
+  (13, 'We Will Rock You', 3.06, 8),
+  (14, 'We Are The Champions', 2.59, 8),
+  (15, 'Fortunate Son', 2.46, 13),
+  (16, 'Down on the Corner', 3.26, 13),
+  (17, 'Green River', 2.34, 14),
+  (18, 'Volunteers', 3.07, 14),
+  (19, 'Cotton Fields', 2.57, 9),
+  (20,'My Way', 3.05, 11),
+  (21, 'Shape of My Heart', 3.45, 12),
+  (22, 'Track', 4.5, Null);
+
+ CREATE TABLE IF NOT exists collection(
+	id SERIAL PRIMARY KEY,
+	collection_name varchar(80) unique,
+	year float 
+);
+
+INSERT INTO
+  collection(id, collection_name, year)
+VALUES 
+   (1, 'John Denver Collection', 2020),
+   (2, 'David Rawlings Collection', 2014),
+   (3, 'Bee Gees Collection', 2015),
+   (4, 'Queen Collection', 1982),
+   (5, 'Creedence Clearwater Revival Collection', 2019),
+   (6, 'Jefferson Airplane Collection', 1997),
+   (7, 'Frank Sinatra Collection', 1977),
+   (8, 'Sting Collection', 1989);
+
+
+ CREATE TABLE IF NOT exists performer_album(
+	Album_id integer references Album(id),
+	performer_id integer references performer(id)
+
+);
+
+INSERT INTO
+  performer_album(album_id, performer_id)
+VALUES  
+   (1, 1),
+   (2, 1),
+   (3, 2),
+   (4, 2),
+   (5, 3),
+   (6, 3),
+   (7, 4),
+   (8, 4),
+   (13, 5),
+   (14, 5),
+   (9, 6),
+   (10, 6),
+   (11, 7),
+   (12, 8);
+
+CREATE TABLE IF NOT exists collection_track(
+	collection_id integer references collection(id),
+	track_id integer references track(id)
+
+);
+
+INSERT INTO
+  collection_track(collection_id, track_id)
+VALUES  
+	(1, 1),
+	(1, 2),
+	(1, 3),
+	(1, 4),
+	(2, 5),
+	(2, 6),
+	(3, 7),
+	(3, 8),
+	(3, 9),
+	(4, 10),
+	(4, 11),
+	(4, 12),
+	(5, 13),
+	(5, 14),
+	(5, 15),
+	(6, 16),
+	(6, 17),
+	(6, 18),
+	(6, 19),
+	(7, 20),
+	(8, 21);
+
+CREATE TABLE IF NOT exists genre_performer(
+	genre_id integer references genre(id),
+	performer_id integer references performer(id)
+
+);
+
+INSERT INTO
+  genre_performer(genre_id, performer_id)
+VALUES  
+	(1 , 1),
+	(1, 2),
+	(2, 3),
+	(2, 4),
+	(3, 5),
+	(3, 6),
+	(4, 5),
+	(5, 6);

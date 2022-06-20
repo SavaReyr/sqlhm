@@ -1,0 +1,46 @@
+CREATE TABLE IF NOT EXISTS performer(
+	id SERIAL PRIMARY KEY,
+	name varchar(80) unique
+);
+
+CREATE TABLE IF NOT EXISTS Album(
+	id SERIAL PRIMARY KEY,
+	album_name varchar(80) unique,
+	release_year INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS genre(
+	id SERIAL PRIMARY KEY,
+	genre_name varchar(80) unique 
+);
+
+CREATE TABLE IF NOT EXISTS track(
+	id SERIAL PRIMARY KEY,
+	track_name varchar(80) unique,
+	duration float,
+	album_id integer references Album(id) 
+);
+
+ CREATE TABLE IF NOT exists collection(
+	id SERIAL PRIMARY KEY,
+	collection_name varchar(80) unique,
+	year float 
+);
+
+ CREATE TABLE IF NOT exists performer_album(
+	Album_id integer references Album(id),
+	performer_id integer references performer(id)
+
+);
+
+CREATE TABLE IF NOT exists collection_track(
+	collection_id integer references collection(id),
+	track_id integer references track(id)
+
+);
+
+CREATE TABLE IF NOT exists genre_performer(
+	genre_id integer references genre(id),
+	performer_id integer references performer(id)
+
+);
